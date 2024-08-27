@@ -1,15 +1,32 @@
-import { useState } from "react";
-import { Button } from "./components/ui/button";
+import { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./components/ui/card";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [totalSpent, setTotalSpent] = useState(0);
+
+  useEffect(() => {
+    async function fetchTotal() {
+      const res = await fetch("/api/expenses/total-spent");
+      const data = res.json();
+      setTotalSpent(data.total);
+    }
+    fetchTotal();
+  }, []);
 
   return (
-    <>
-      <Button onClick={() => setCount((count) => count + 1)}>up</Button>
-      <p>{count}</p>
-      <Button onClick={() => setCount((count) => count - 1)}>down</Button>
-    </>
+    <Card className="w-[350px]">
+      <CardHeader>
+        <CardTitle>Total Spent</CardTitle>
+        <CardDescription>The Total amount you've spent</CardDescription>
+      </CardHeader>
+      <CardContent>{totalSpent}</CardContent>
+    </Card>
   );
 }
 
