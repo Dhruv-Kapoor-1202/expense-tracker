@@ -3,6 +3,7 @@
   "builds": [
     {
       "src": "server/index.ts",
+      "use": "@vercel/bun",
       "config": { "includeFiles": ["frontend/dist/**"] }
     }
   ],
