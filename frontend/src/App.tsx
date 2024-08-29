@@ -13,14 +13,14 @@ function App() {
   useEffect(() => {
     async function fetchTotal() {
       const res = await fetch("/api/expenses/total-spent");
-      const data = res.json();
+      const data = await res.json();
       setTotalSpent(data.total);
     }
     fetchTotal();
   }, []);
 
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[350px] m-auto">
       <CardHeader>
         <CardTitle>Total Spent</CardTitle>
         <CardDescription>The Total amount you've spent</CardDescription>
