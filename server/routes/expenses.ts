@@ -4,6 +4,9 @@ import { z } from "zod";
 
 import { getUser } from "../kinde";
 
+import { db } from "../db";
+import { expenses } from "../db/schema/expenses";
+
 const expenseSchema = z.object({
   id: z.number().int().positive().min(1),
   title: z.string().min(3).max(100),
