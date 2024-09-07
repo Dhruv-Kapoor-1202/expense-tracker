@@ -18,12 +18,6 @@ type Expense = z.infer<typeof expenseSchema>;
 
 const createPostSchema = expenseSchema.omit({ id: true });
 
-const fakeExpenses: Expense[] = [
-  { id: 1, title: "Groceries", amount: "50" },
-  { id: 2, title: "Utilities", amount: "100" },
-  { id: 3, title: "Rent", amount: "1000" },
-];
-
 export const expensesRoute = new Hono()
   .get("/", getUser, async (c) => {
     const user = c.var.user;
@@ -31,7 +25,9 @@ export const expensesRoute = new Hono()
     const expenses = await db
       .select()
       .from(expenseTable)
-      .where(eq(expenseTable.userId, user.id));
+      .where(eq(expenseTable.userId, user.id))
+      .orderBy()
+      .limit(100);
 
     return c.json({ expenses: expenses });
   })
