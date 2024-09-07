@@ -42,7 +42,7 @@ function CreateExpense() {
           e.stopPropagation();
           void form.handleSubmit();
         }}
-        className="max-w-xl m-auto"
+        className="flex flex-col max-w-xl m-auto gap-y-4"
       >
         <form.Field
           name="title"
@@ -50,7 +50,7 @@ function CreateExpense() {
             onChange: createExpenseSchema.shape.title,
           }}
           children={(field) => (
-            <>
+            <div>
               <Label htmlFor={field.name}>Title</Label>
               <Input
                 id={field.name}
@@ -63,7 +63,7 @@ function CreateExpense() {
                 <em>{field.state.meta.errors.join(", ")}</em>
               ) : null}
               {field.state.meta.isValidating ? "Validating..." : null}
-            </>
+            </div>
           )}
         />
         <form.Field
@@ -72,7 +72,7 @@ function CreateExpense() {
             onChange: createExpenseSchema.shape.amount,
           }}
           children={(field) => (
-            <>
+            <div>
               <Label htmlFor={field.name}>Amount</Label>
               <Input
                 id={field.name}
@@ -86,7 +86,7 @@ function CreateExpense() {
                 <em>{field.state.meta.errors.join(", ")}</em>
               ) : null}
               {field.state.meta.isValidating ? "Validating..." : null}
-            </>
+            </div>
           )}
         />
 
