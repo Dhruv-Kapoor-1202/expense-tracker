@@ -33,3 +33,5 @@ export const Route = createFileRoute("/_authenticated")({
   },
   component: Component,
 });
+
+// Fuck all of this
