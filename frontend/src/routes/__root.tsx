@@ -16,7 +16,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function NavBar() {
   return (
-    <div className="flex gap-2 p-2">
+    <div className="flex max-w-2xl gap-2 p-2 m-auto">
       <Link to="/" className="[&.active]:font-bold">
         Home
       </Link>{" "}
@@ -41,7 +41,9 @@ function Root() {
     <>
       <NavBar />
       <hr />
-      <Outlet />
+      <div className="max-w-2xl gap-2 p-2 m-auto ">
+        <Outlet />
+      </div>
       {/* <TanStackRouterDevtools /> */}
     </>
   );
