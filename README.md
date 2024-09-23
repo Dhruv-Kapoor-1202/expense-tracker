@@ -1,15 +1,35 @@
-# expense-tracker
+# Expense Tracker
 
-To install dependencies:
+## Server Setup
+
+### 1. Install Dependencies:
 
 ```bash
 bun install
 ```
 
-To run:
+### 2. Run the Server:
 
 ```bash
-bun run index.ts
+bun run dev
 ```
 
-This project was created using `bun init` in bun v1.1.25. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## Frontend Setup
+
+### 1. Navigate to the Frontend Directory:
+
+```bash
+cd ./frontend/
+```
+
+### 2. Install Dependencies:
+
+```bash
+bun install
+```
+
+### 2. Run the Frontend:
+
+```bash
+bun run dev
+```
