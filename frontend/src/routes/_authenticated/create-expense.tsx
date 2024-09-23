@@ -4,7 +4,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 import { useForm } from "@tanstack/react-form";
-import { api } from "@/lib/api";
+import { api, getAllExpensesQueryOptions } from "@/lib/api";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { zodValidator } from "@tanstack/zod-form-adapter";
 
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/_authenticated/create-expense")({
 });
 
 function CreateExpense() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const form = useForm({
     validatorAdapter: zodValidator(),
@@ -26,11 +28,22 @@ function CreateExpense() {
     },
     onSubmit: async ({ value }) => {
       // Do something with form data
+      const existingExpenses = await queryClient.ensureQueryData(
+        getAllExpensesQueryOptions
+      );
+
       await new Promise((r) => setTimeout(r, 250));
       const result = await api.expenses.$post({ json: value });
       if (!result.ok) {
         throw new Error("Server Error");
       }
+
+      const newExpense = await result.json();
+      queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
+        ...existingExpenses,
+        expenses: [newExpense, ...existingExpenses.expenses],
+      });
+
       navigate({ to: "/expenses" });
     },
   });
