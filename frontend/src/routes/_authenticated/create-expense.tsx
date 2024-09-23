@@ -37,7 +37,7 @@ function CreateExpense() {
 
   return (
     <div className="p-2">
-      <h2>Create Expenses!</h2>
+      {/* <h2>Create Expenses!</h2> */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
