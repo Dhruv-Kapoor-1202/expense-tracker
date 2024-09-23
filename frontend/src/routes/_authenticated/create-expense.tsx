@@ -4,13 +4,18 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 import { useForm } from "@tanstack/react-form";
-import { api, getAllExpensesQueryOptions } from "@/lib/api";
+import {
+  createExpense,
+  getAllExpensesQueryOptions,
+  loadingCreateExpenseQueryOptions,
+} from "@/lib/api";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { zodValidator } from "@tanstack/zod-form-adapter";
 
 import { createExpenseSchema } from "@server/sharedTypes";
 import { Calendar } from "@/components/ui/calendar";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/create-expense")({
   component: CreateExpense,
@@ -31,20 +36,32 @@ function CreateExpense() {
       const existingExpenses = await queryClient.ensureQueryData(
         getAllExpensesQueryOptions
       );
+      navigate({ to: "/expenses" });
 
-      await new Promise((r) => setTimeout(r, 250));
-      const result = await api.expenses.$post({ json: value });
-      if (!result.ok) {
-        throw new Error("Server Error");
-      }
-
-      const newExpense = await result.json();
-      queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
-        ...existingExpenses,
-        expenses: [newExpense, ...existingExpenses.expenses],
+      // loading state
+      queryClient.setQueryData(loadingCreateExpenseQueryOptions.queryKey, {
+        expense: value,
       });
 
-      navigate({ to: "/expenses" });
+      try {
+        const newExpense = await createExpense({ value });
+
+        queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
+          ...existingExpenses,
+          expenses: [newExpense, ...existingExpenses.expenses],
+        });
+        // Success State
+        toast("Expense Created", {
+          description: `Successfully create new expense. ID:  ${newExpense.id}`,
+        });
+      } catch (err) {
+        // Error State
+        toast("Error", {
+          description: `Failed to create new expense!\n${err}`,
+        });
+      } finally {
+        queryClient.setQueryData(loadingCreateExpenseQueryOptions.queryKey, {});
+      }
     },
   });
 

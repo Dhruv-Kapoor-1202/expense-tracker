@@ -4,6 +4,7 @@ import {
   Outlet,
 } from "@tanstack/react-router";
 import { type QueryClient } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/sonner";
 // import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
 interface MyRouterContext {
@@ -55,6 +56,7 @@ function Root() {
       <div className="max-w-lg gap-2 p-2 m-auto sm:max-w-2xl ">
         <Outlet />
       </div>
+      <Toaster />
       {/* <TanStackRouterDevtools /> */}
     </>
   );
