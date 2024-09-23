@@ -15,6 +15,13 @@
       "when": 1725723364201,
       "tag": "0001_deep_roxanne_simpson",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1727121207737,
+      "tag": "0002_unique_frank_castle",
+      "breakpoints": true
     }
   ]
 }
